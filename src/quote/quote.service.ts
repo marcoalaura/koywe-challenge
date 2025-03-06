@@ -2,13 +2,13 @@ import { Injectable, NotFoundException, BadRequestException } from '@nestjs/comm
 import { PrismaService } from '../providers/prisma/prisma.service';
 import { QuoteDto } from '../models/dtos/quote.dto';
 import { v4 as uuidv4 } from 'uuid';
-import { ApiExchangeProvider } from '../providers/exchange-rate/exchange.provider';
+import { ExchangeProvider } from '../providers/exchange-rate/exchange.provider';
 
 @Injectable()
 export class QuoteService {
     constructor(
         private readonly prisma: PrismaService,
-        private readonly apiExchangeProvider: ApiExchangeProvider
+        private readonly exchangeProvider: ExchangeProvider
       ) {}
 
   async createQuote(data: QuoteDto) {
@@ -18,7 +18,7 @@ export class QuoteService {
     }
 
      // Usamos el proveedor para obtener la tasa de cambio
-     const rate = await this.apiExchangeProvider.getExchangeRate(data.from, data.to);
+     const rate = await this.exchangeProvider.getExchangeRate(data.from, data.to);
 
     if (!rate) {
       throw new NotFoundException('Exchange rate not available');

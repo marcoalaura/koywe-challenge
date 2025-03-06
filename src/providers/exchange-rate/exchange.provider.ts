@@ -2,7 +2,7 @@ import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import axios from 'axios';
 
 @Injectable()
-export class ApiExchangeProvider {
+export class ExchangeProvider {
   private readonly apiUrl = process.env.EXCHANGE_API_URL || 'https://api.exchange.cryptomkt.com/api/3/public/price/rate';
 
   async getExchangeRate(from: string, to: string): Promise<number | null> {
