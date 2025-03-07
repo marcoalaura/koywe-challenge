@@ -161,3 +161,9 @@ Tambien puede dar de baja los servicios.
 docker stop koywe_api
 docker stop koywe_postgres
 ```
+
+## 9️⃣ Frontend para consultar este backend
+
+Se ha realizado un aplicativo bajo la tecnologìas NextJS que realiza la autenticación y consulta a las APIs del backend.
+
+Debe consultar el siguiente proyecto: [https://github.com/marcoalaura/koywe-challenge-frontend](https://github.com/marcoalaura/koywe-challenge-frontend)
