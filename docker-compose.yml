@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:14
+    container_name: koywe_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: koywe_user
+      POSTGRES_PASSWORD: koywe_password
+      POSTGRES_DB: koywe_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  app:
+    build: .
+    container_name: koywe_api
+    restart: always
+    depends_on:
+      - postgres
+    environment:
+      DATABASE_URL: "postgresql://koywe_user:koywe_password@postgres:5432/koywe_db"
+      JWT_SECRET: "secreto_super_seguro"
+      EXCHANGE_API_URL: "https://api.exchange.cryptomkt.com/api/3/public/price/rate"
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+
+volumes:
+  postgres_data:

@@ -105,10 +105,59 @@ npm run test:e2e
 ✔ Esto ejecutará las pruebas completas de la API usando Supertest.
 
 ## 8️⃣ Herramientas Adicionales
-**Ver Base de Datos con Prisma Studio**
+**A. Ver Base de Datos con Prisma Studio**
 ```bash
 npx prisma studio
 ```
 Permite visualizar la base de datos en una interfaz gráfica.
 
 Por defecto esta es la url: http://localhost:5555/
+
+**B. Uso de postman para validar el API**
+
+La siguiente herramienta es útil para poder probar la API del backend.
+
+**C. Configuracion Docker**
+
+Se cuenta con la configuración necesaria para levantar las instancias en contenedores docker.
+
+En el archivo **dockerfile** tenemos las instrucciones necesarias para levantar nuestra instancia del API.
+
+En el archivo **docker-compose.yml**  tenemos la configuración necesaria para levantar las instancias de base de datos postgres y el backend. De ser necesario se puede ajustar las variables de entorno y los puertos que se estan usando.
+
+Los comandos para cargar los contenedores son los siguientes:
+
+```bash
+docker-compose up --build -d
+```
+✔ Esto construye la imagen y levanta los contenedores en modo detached (en segundo plano).
+
+Verificar que los Contenedores Están Corriendo
+```bash
+docker ps
+```
+✔ Debe mostrar koywe_api y koywe_postgres activos.
+
+Ver los Logs de la API
+```bash
+docker logs -f koywe_api
+```
+
+Inicializar la base de datos con prisma en el contenedor
+```bash
+docker exec -it koywe_api npx prisma migrate dev --name init
+```
+✔ Esto ejecuta las migraciones para crear las tablas en PostgreSQL dentro del contenedor.
+
+Detener los Contenedores
+
+```bash
+docker-compose down
+```
+✔ Esto apaga la API y PostgreSQL sin eliminar los datos.
+
+Tambien puede dar de baja los servicios.
+```bash
+docker stop koywe_api
+docker stop koywe_postgres
+```
